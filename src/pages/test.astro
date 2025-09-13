@@ -1,4 +1,7 @@
 ---
+const site = 'https://mindyourdecisions.com/blog/wp-json/wp/v2/posts';
+const res = await fetch(site);
+const posts = await res.json();
 ---
 
 <html lang="en">
@@ -10,6 +13,12 @@
 		<title>New page to test routing</title>
 	</head>
 	<body>
-		<h1>Maw!!</h1>
+		<h1>Maw!! 🚀</h1>
+		{
+		  posts.map((post) => (
+		      <h2 set:html={post.title.rendered} />
+		      <p set:html={post.content.rendered} />
+		  ))
+		}
 	</body>
 </html>
