@@ -12,6 +12,23 @@ const posts = await res.json();
 		<meta name="generator" content={Astro.generator} />
 		<title>New page to test routing</title>
 	</head>
+	<script>
+		// fix images they are set to data-src with the src attribute set to some hash of the image
+		document.addEventListener("DOMContentLoaded", function () {
+		    const lazyImages = document.querySelectorAll("img[data-src]");
+		    const observer = new IntersectionObserver((entries, observer) => {
+		        entries.forEach(entry => {
+		            if (entry.isIntersecting) {
+		                const img = entry.target;
+		                img.src = img.dataset.src;
+		                img.removeAttribute("data-src");
+		                observer.unobserve(img);
+		            }
+		        });
+		    });
+		    lazyImages.forEach(img => observer.observe(img));
+		});
+	</script>
 	<body>
 		<h1>Maw!! 🚀</h1>
 		{
